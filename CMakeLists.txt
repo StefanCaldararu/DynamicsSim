@@ -12,8 +12,11 @@ find_package(Eigen3 REQUIRED)
 # ---- Libraries ----
 
 add_library(dynamics
-    src/dynamics/body.cpp
-    src/dynamics/dynamics.cpp
+    src/dynamics/Body.cpp
+    src/dynamics/Dynamics.cpp
+    src/dynamics/GravityModel.cpp
+    src/dynamics/RK4.cpp
+    src/dynamics/Euler.cpp
 )
 
 target_link_libraries(dynamics PUBLIC Eigen3::Eigen)

@@ -1,31 +1,31 @@
-#ifndef DYNAMICS_HPP
-#define DYNAMICS_HPP
-
+#pragma once
 #include <vector>
-#include "dynamics/Body.hpp"
+#include <memory>
+
+#include "Body.hpp"
+#include "ODE.hpp"
+#include "Integrator.hpp"
 
 namespace Dynamics {
 
 class Dynamics {
 public:
+    Dynamics() = default;
 
-    Dynamics(float G = 1.0f);
+    void setModel(std::unique_ptr<ODE> model);
+    void setIntegrator(std::unique_ptr<Integrator> integrator);
 
     void addBody(const Body& body);
-
-    void update(float dt);
-
+    std::vector<Body>& getBodies();
     const std::vector<Body>& getBodies() const;
 
-private:
+    void step(float dt);
 
+private:
     std::vector<Body> bodies;
 
-    float G;
-
-    void computeAccelerations(std::vector<Eigen::Vector3f>& accels);
+    std::unique_ptr<ODE> model;
+    std::unique_ptr<Integrator> integrator;
 };
 
 }
-
-#endif

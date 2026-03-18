@@ -1,69 +1,35 @@
-#include "dynamics/Dynamics.hpp"
-#include <cmath>
+#include "dynamics/dynamics.hpp"
+#include <stdexcept>
 
 namespace Dynamics {
 
-Dynamics::Dynamics(float G_)
-    : G(G_)
-{}
+void Dynamics::setModel(std::unique_ptr<ODE> model_) {
+    model = std::move(model_);
+}
+
+void Dynamics::setIntegrator(std::unique_ptr<Integrator> integrator_) {
+    integrator = std::move(integrator_);
+}
 
 void Dynamics::addBody(const Body& body) {
     bodies.push_back(body);
+}
+
+std::vector<Body>& Dynamics::getBodies() {
+    return bodies;
 }
 
 const std::vector<Body>& Dynamics::getBodies() const {
     return bodies;
 }
 
-void Dynamics::computeAccelerations(std::vector<Eigen::Vector3f>& accels) {
+void Dynamics::step(float dt) {
 
-    int n = bodies.size();
-    accels.resize(n);
-
-    for (int i = 0; i < n; i++)
-        accels[i] = Eigen::Vector3f::Zero();
-
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-
-            Eigen::Vector3f r =
-                bodies[j].getPosition() -
-                bodies[i].getPosition();
-
-            float dist = r.norm();
-
-            if (dist < 1e-3f)
-                continue;
-
-            Eigen::Vector3f force =
-                G * r / std::pow(dist, 3);
-
-            accels[i] += bodies[j].getMass() * force;
-            accels[j] -= bodies[i].getMass() * force;
-        }
+    if (!model || !integrator) {
+        throw std::runtime_error("Dynamics: model or integrator not set");
     }
-}
 
-void Dynamics::update(float dt) {
-
-    std::vector<Eigen::Vector3f> accels;
-
-    computeAccelerations(accels);
-
-    for (size_t i = 0; i < bodies.size(); i++) {
-
-        Eigen::Vector3f v =
-            bodies[i].getVelocity();
-
-        Eigen::Vector3f x =
-            bodies[i].getPosition();
-
-        v += accels[i] * dt;
-        x += v * dt;
-
-        bodies[i].setVelocity(v);
-        bodies[i].setPosition(x);
-    }
+    integrator->step(bodies, *model, dt);
 }
 
 }
