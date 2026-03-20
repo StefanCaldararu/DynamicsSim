@@ -17,6 +17,7 @@ add_library(dynamics
     src/dynamics/GravityModel.cpp
     src/dynamics/RK4.cpp
     src/dynamics/Euler.cpp
+    src/dynamics/CR3BP.cpp
 )
 
 target_link_libraries(dynamics PUBLIC Eigen3::Eigen)

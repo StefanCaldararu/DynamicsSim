@@ -15,6 +15,9 @@ class Renderer {
 
     private:
         sf::RenderWindow window;
+        void renderGeneric(const std::vector<Dynamics::Body>& bodies);
+        float scale = -1.0f;
+        float margin = 1.2f;
 
 };
 }
