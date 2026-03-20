@@ -8,6 +8,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # ---- Dependencies ----
 find_package(SFML 3 COMPONENTS Graphics Window System REQUIRED)
 find_package(Eigen3 REQUIRED)
+include(FetchContent)
+
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/heads/main.zip
+)
+
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
 
 # ---- Libraries ----
 
@@ -35,6 +45,19 @@ target_link_libraries(vis
 )
 
 target_include_directories(vis PUBLIC include)
+
+add_executable(tests
+    tests/testBody.cpp
+)
+
+target_link_libraries(tests
+    dynamics   # your library
+    gtest
+    gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(tests)
 
 # ---- Executable ----
 
