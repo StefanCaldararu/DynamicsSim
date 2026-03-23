@@ -48,6 +48,7 @@ target_include_directories(vis PUBLIC include)
 
 add_executable(tests
     tests/testBody.cpp
+    tests/testCR3BP.cpp
 )
 
 target_link_libraries(tests
