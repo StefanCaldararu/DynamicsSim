@@ -46,9 +46,12 @@ target_link_libraries(vis
 
 target_include_directories(vis PUBLIC include)
 
+file(GLOB TEST_SOURCES CONFIGURE_DEPENDS
+    tests/*.cpp
+)
+
 add_executable(tests
-    tests/testBody.cpp
-    tests/testCR3BP.cpp
+    ${TEST_SOURCES}
 )
 
 target_link_libraries(tests
