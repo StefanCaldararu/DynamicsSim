@@ -58,12 +58,13 @@ Dynamics SystemFactory::createEarthMoonCR3BP_L4() {
     return builder.build();
 }
 
+
 Dynamics SystemFactory::createEarthMoonCR3BP_L4_Tadpole() {
     const float mu = 0.01215f;
     DynamicsBuilder builder;
-
-    // Spacecraft in tadpole orbit around L4 with initial velocity perturbation
-    builder.addBody(Body({0.5f - mu, 0.8660254f, 0.0f}, {-0.22f, 0.05f, 0.0f}, 0.0f, 2.0f));
+    // Short period L4 orbit grabbed from ID 768
+    // https://ssd.jpl.nasa.gov/tools/periodic_orbits.html
+    builder.addBody(Body({4.8784941344943100e-1f, 1.3592776304398071f, 0.f}, {7.3994557499431435e-1f, -3.6396916907329402e-1f, 0.f}, 0.f, 1.0f));
     builder.addBody(Body({-mu, 0.0f, 0.0f}, {0,0,0}, 1.0f, 10.0f));
     builder.addBody(Body({1.0f - mu, 0.0f, 0.0f}, {0,0,0}, mu, 5.0f));
 
