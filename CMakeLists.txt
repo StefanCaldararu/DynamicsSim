@@ -24,6 +24,7 @@ enable_testing()
 add_library(dynamics
     src/dynamics/Body.cpp
     src/dynamics/Dynamics.cpp
+    src/dynamics/SystemFactory.cpp
     src/dynamics/GravityModel.cpp
     src/dynamics/RK4.cpp
     src/dynamics/Euler.cpp
