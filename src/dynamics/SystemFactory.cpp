@@ -115,7 +115,13 @@ Dynamics SystemFactory::createCR3BPLEO() {
     const float mu = 0.01215f;
     DynamicsBuilder builder;
 
-    builder.addBody(Body({0.01f, 6770.0f, 0.0f}, {7.8f, 0.0f, 0.0f}, 0.0f, 1.0f));
+    float r_leo = 0.0176f;
+    float x = -mu + r_leo;
+    float y = 0.0f;
+    float v_inertial = std::sqrt((1.0f - mu) / r_leo);
+    float vy = v_inertial - x;
+    
+    builder.addBody(Body({x, y, 0.0f}, {0.0f, vy, 0.0f}, 0.0f, 1.0f));
     builder.addBody(Body({-mu, 0.0f, 0.0f}, {0,0,0}, 1.0f, 10.0f));
     builder.addBody(Body({1.0f - mu, 0.0f, 0.0f}, {0,0,0}, mu, 5.0f));
 
@@ -125,4 +131,4 @@ Dynamics SystemFactory::createCR3BPLEO() {
     return builder.build();
 }
 
-} // namespace Dynamics
+}
