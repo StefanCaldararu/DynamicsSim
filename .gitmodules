@@ -1,0 +1,3 @@
+[submodule "assets/Fonts"]
+	path = assets/Fonts
+	url = git@github.com:kavin808/arial.ttf.git

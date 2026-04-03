@@ -20,12 +20,14 @@ public:
     const std::vector<Body>& getBodies() const;
 
     void step(double dt);
+    double getTime();
 
 private:
     std::vector<Body> bodies;
 
     std::unique_ptr<ODE> model;
     std::unique_ptr<Integrator> integrator;
+    double time = 0.;
 };
 
 }

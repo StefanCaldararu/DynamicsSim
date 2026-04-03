@@ -23,6 +23,10 @@ const std::vector<Body>& Dynamics::getBodies() const {
     return bodies;
 }
 
+double Dynamics::getTime() {
+    return time;
+}
+
 void Dynamics::step(double dt) {
 
     if (!model || !integrator) {
@@ -30,6 +34,7 @@ void Dynamics::step(double dt) {
     }
 
     integrator->step(bodies, *model, dt);
+    time += dt;
 }
 
 }

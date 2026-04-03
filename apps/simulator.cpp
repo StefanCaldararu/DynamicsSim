@@ -20,7 +20,7 @@ int main() {
 
         system.step(dt);
 
-        renderer.update(system.getBodies());
+        renderer.update(system.getBodies(), system.getTime());
     }
 
     return 0;

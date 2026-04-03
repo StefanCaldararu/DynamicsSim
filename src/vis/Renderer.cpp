@@ -1,8 +1,19 @@
 #include "vis/Renderer.hpp"
+#include <iomanip>
+#include <sstream>
 
 namespace Vis{
-    Renderer::Renderer(){
+    Renderer::Renderer() : infoText(font){
         this->window = sf::RenderWindow(sf::VideoMode({800, 600}), "Simulation");
+
+        const std::string fontPath = "../Assets/Fonts/Arial.ttf";
+        font.openFromFile(fontPath);
+        if(!font.getInfo().family.empty()){
+            infoText = sf::Text(font, "", 14);
+            infoText.setFillColor(sf::Color::White);
+            infoText.setPosition(sf::Vector2f(12., 12.));
+        }
+
     }
 
     void Renderer::renderGeneric(const std::vector<Dynamics::Body>& bodies){
@@ -42,10 +53,14 @@ namespace Vis{
         double y = screen_center.y - (world.y() - origin.y()) * scale;
         return sf::Vector2f(static_cast<float>(x), static_cast<float>(y));
     }
+
+    void Renderer::update(const std::vector<Dynamics::Body>& bodies){
+        this->update(bodies, -1.);
+    }
     
 
 
-    void Vis::Renderer::update(const std::vector<Dynamics::Body>& bodies){
+    void Renderer::update(const std::vector<Dynamics::Body>& bodies, double simTime){
 
         if (bodies.size() != 3){
             renderGeneric(bodies);
@@ -125,6 +140,23 @@ namespace Vis{
             window.draw(circle);
         }
 
+        renderInfoPanel(simTime, bodies);
+
         window.display();
     }
+
+    void Renderer::renderInfoPanel(double simTime, const std::vector<Dynamics::Body>& bodies){
+        if(infoText.getString() == "" && font.getInfo().family.empty()){
+            return;
+        }
+
+        std::ostringstream oss;
+        oss << std::fixed << std::setprecision(2);
+        oss << "Time: " << simTime << "\n";
+        oss << "Bodies: " << bodies.size() << "\n";
+        infoText.setString(oss.str());
+        infoText.setPosition(sf::Vector2f(12., window.getSize().y - 80.));
+        window.draw(infoText);
+    }
+
     }
