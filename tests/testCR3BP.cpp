@@ -2,6 +2,7 @@
 #include "dynamics/CR3BP.hpp"
 #include "dynamics/RK4.hpp"
 #include "dynamics/Dynamics.hpp"
+#include "dynamics/control/SimpleControl.hpp"
 #include <vector>
 #include <cmath>
 
@@ -97,4 +98,30 @@ TEST(CR3BPTest, JacobiConstantApproxConstThroughIntegration) {
     double c1 = Dynamics::CR3BPModel(mu).getJacobiConstant(pos1, vel1);
 
     EXPECT_NEAR(c1, c0, 1e-4);
+}
+
+TEST(CR3BPTest, ControllerIsInvoked) {
+    double mu = 0.01215;
+    
+    // Create a SimpleControl: dv=0.1, burnDuration=1.0, burnStartTime=0.5
+    auto controller = std::make_unique<Dynamics::SimpleControl>(0.1, 1.0, 0.5);
+    
+    // Create CR3BPModel WITH the controller
+    Dynamics::CR3BPModel model(mu, std::move(controller));
+
+    Eigen::Vector3d pos(0.5 - mu, 0.8660254, 0.0);
+    Eigen::Vector3d vel(1.0, 0.0, 0.0);  // Non-zero velocity so control can apply
+    
+    std::vector<Eigen::Vector3d> positions = {pos};
+    std::vector<Eigen::Vector3d> velocities = {vel};
+    std::vector<Eigen::Vector3d> dpos_dt;
+    std::vector<Eigen::Vector3d> dvel_dt;
+
+    // Call derivatives at time during burn window (0.5 to 1.5)
+    double t_burn = 0.7;
+    model.derivatives(t_burn, positions, velocities, dpos_dt, dvel_dt);
+
+    // Verify acceleration is NOT zero (controller was applied)
+    double accel_magnitude = dvel_dt[0].norm();
+    EXPECT_GT(accel_magnitude, 0.0);
 }

@@ -14,7 +14,8 @@ enum class Scenario {
     TwoBodyMutual,
     OneLargeOneSmall,
     ThreeBodyStable,
-    CR3BP_LEO
+    CR3BP_LEO,
+    CR3BP_EarthOrbit
 };
 
 class DynamicsBuilder {
@@ -41,6 +42,7 @@ public:
     static Dynamics createOneLargeOneSmall();
     static Dynamics createThreeBodyStable();
     static Dynamics createCR3BPLEO();
+    static Dynamics createCR3BP_EarthOrbit();
 };
 
 } // namespace Dynamics

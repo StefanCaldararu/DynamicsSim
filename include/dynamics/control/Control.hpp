@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CONTROL_H
+#define CONTROL_H
 #include <Eigen/Dense>
 
 namespace Dynamics {
@@ -12,3 +13,4 @@ public:
 };
 
 }
+#endif

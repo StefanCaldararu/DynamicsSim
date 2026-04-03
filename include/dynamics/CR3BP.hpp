@@ -1,12 +1,13 @@
 #pragma once
 #include "ODE.hpp"
 #include "control/Control.hpp"
+#include <memory>
 
 namespace Dynamics {
 
 class CR3BPModel : public ODE {
 public:
-    CR3BPModel(double mu_, Control* control_ = nullptr);
+    CR3BPModel(double mu_, std::unique_ptr<Control> control_ = nullptr);
 
     void derivatives(
         double t,
@@ -20,7 +21,7 @@ public:
 
 private:
     double mu;
-    Control* control;
+    std::unique_ptr<Control> control;
 };
 
 }

@@ -3,6 +3,7 @@
 #include "dynamics/GravityModel.hpp"
 #include "dynamics/RK4.hpp"
 #include "dynamics/Euler.hpp"
+#include "dynamics/control/SimpleControl.hpp"
 
 namespace Dynamics {
 
@@ -39,6 +40,8 @@ Dynamics SystemFactory::createScenario(Scenario scenario) {
             return createThreeBodyStable();
         case Scenario::CR3BP_LEO:
             return createCR3BPLEO();
+        case Scenario::CR3BP_EarthOrbit:
+            return createCR3BP_EarthOrbit();
         default:
             return createEarthMoonCR3BP_L4();
     }
@@ -126,6 +129,26 @@ Dynamics SystemFactory::createCR3BPLEO() {
     builder.addBody(Body({1.0 - mu, 0.0, 0.0}, {0,0,0}, mu, 5.0));
 
     builder.withModel(std::make_unique<CR3BPModel>(mu));
+    builder.withIntegrator(std::make_unique<RK4>());
+
+    return builder.build();
+}
+
+Dynamics SystemFactory::createCR3BP_EarthOrbit() {
+    const double mu = 0.01215;
+    DynamicsBuilder builder;
+
+    double r_leo = 0.0176;
+    double x = -mu + r_leo;
+    double y = 0.0;
+    double v_inertial = std::sqrt((1.0 - mu) / r_leo);
+    double vy = v_inertial - x;
+    
+    builder.addBody(Body({x, y, 0.0}, {0.0, vy, 0.0}, 0.0, 1.0));
+    builder.addBody(Body({-mu, 0.0, 0.0}, {0,0,0}, 1.0, 10.0));
+    builder.addBody(Body({1.0 - mu, 0.0, 0.0}, {0,0,0}, mu, 5.0));
+    //Simple controller for our CR3BPModel
+    builder.withModel(std::make_unique<CR3BPModel>(mu, std::make_unique<SimpleControl>(5, .3, 0.5)));
     builder.withIntegrator(std::make_unique<RK4>());
 
     return builder.build();

@@ -2,12 +2,13 @@
 #include "ODE.hpp"
 #include "Body.hpp"
 #include "control/Control.hpp"
+#include <memory>
 
 namespace Dynamics {
 
 class GravityModel : public ODE {
 public:
-    GravityModel(double G, const std::vector<Body>& bodies, Control* control_ = nullptr);
+    GravityModel(double G, const std::vector<Body>& bodies, std::unique_ptr<Control> control_ = nullptr);
 
     void derivatives(
         double t,
@@ -20,7 +21,7 @@ public:
 private:
     double G;
     const std::vector<Body>& bodies;
-    Control* control;
+    std::unique_ptr<Control> control;
 };
 
 }

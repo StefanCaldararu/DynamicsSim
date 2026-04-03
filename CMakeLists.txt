@@ -29,6 +29,8 @@ add_library(dynamics
     src/dynamics/RK4.cpp
     src/dynamics/Euler.cpp
     src/dynamics/CR3BP.cpp
+    src/dynamics/control/NoControl.cpp
+    src/dynamics/control/SimpleControl.cpp
 )
 
 target_link_libraries(dynamics PUBLIC Eigen3::Eigen)

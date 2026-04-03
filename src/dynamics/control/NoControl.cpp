@@ -1,4 +1,4 @@
-#include "control/NoControl.hpp"
+#include "dynamics/control/NoControl.hpp"
 
 namespace Dynamics {
 

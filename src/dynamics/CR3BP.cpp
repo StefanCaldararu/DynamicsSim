@@ -1,10 +1,11 @@
 #include "dynamics/CR3BP.hpp"
 #include <cmath>
+#include <iostream>
 
 namespace Dynamics {
 
-CR3BPModel::CR3BPModel(double mu_, Control* control_)
-    : mu(mu_), control(control_)
+CR3BPModel::CR3BPModel(double mu_, std::unique_ptr<Control> control_)
+    : mu(mu_), control(std::move(control_))
 {}
 
 void CR3BPModel::derivatives(
@@ -60,7 +61,12 @@ void CR3BPModel::derivatives(
     dvel_dt[0] = Eigen::Vector3d(ax, ay, az);
 
     if (control) {
+        std::cout << "[CR3BP::derivatives] Control pointer exists, calling getAcceleration() at t=" << t << std::endl;
+        std::cout.flush();
         dvel_dt[0] += control->getAcceleration(t, r, v);
+    } else {
+        std::cout << "[CR3BP::derivatives] Control pointer is NULL at t=" << t << std::endl;
+        std::cout.flush();
     }
 
 }

@@ -9,7 +9,7 @@ int main() {
 
     Vis::Renderer renderer = {};
 
-    Dynamics::Dynamics system = Dynamics::SystemFactory::createScenario(Dynamics::Scenario::CR3BP_LEO);
+    Dynamics::Dynamics system = Dynamics::SystemFactory::createScenario(Dynamics::Scenario::CR3BP_EarthOrbit);
 
 
     const double dt = 1e-4;
