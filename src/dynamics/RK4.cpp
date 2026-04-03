@@ -2,7 +2,7 @@
 
 namespace Dynamics {
 
-void RK4::step(std::vector<Body>& bodies, ODE& model, double dt) {
+void RK4::step(double t, std::vector<Body>& bodies, ODE& model, double dt) {
 
     int n = bodies.size();
 
@@ -19,25 +19,25 @@ void RK4::step(std::vector<Body>& bodies, ODE& model, double dt) {
 
     std::vector<Eigen::Vector3d> xt(n), vt(n);
 
-    model.derivatives(x, v, k1_x, k1_v);
+    model.derivatives(t, x, v, k1_x, k1_v);
 
     for (int i = 0; i < n; i++) {
         xt[i] = x[i] + 0.5 * dt * k1_x[i];
         vt[i] = v[i] + 0.5 * dt * k1_v[i];
     }
-    model.derivatives(xt, vt, k2_x, k2_v);
+    model.derivatives(t + 0.5 * dt, xt, vt, k2_x, k2_v);
 
     for (int i = 0; i < n; i++) {
         xt[i] = x[i] + 0.5 * dt * k2_x[i];
         vt[i] = v[i] + 0.5 * dt * k2_v[i];
     }
-    model.derivatives(xt, vt, k3_x, k3_v);
+    model.derivatives(t + 0.5 * dt, xt, vt, k3_x, k3_v);
 
     for (int i = 0; i < n; i++) {
         xt[i] = x[i] + dt * k3_x[i];
         vt[i] = v[i] + dt * k3_v[i];
     }
-    model.derivatives(xt, vt, k4_x, k4_v);
+    model.derivatives(t + dt, xt, vt, k4_x, k4_v);
 
     for (int i = 0; i < n; i++) {
 

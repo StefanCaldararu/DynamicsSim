@@ -3,11 +3,12 @@
 
 namespace Dynamics {
 
-CR3BPModel::CR3BPModel(double mu_)
-    : mu(mu_)
+CR3BPModel::CR3BPModel(double mu_, Control* control_)
+    : mu(mu_), control(control_)
 {}
 
 void CR3BPModel::derivatives(
+    double t,
     const std::vector<Eigen::Vector3d>& positions,
     const std::vector<Eigen::Vector3d>& velocities,
     std::vector<Eigen::Vector3d>& dpos_dt,
@@ -57,6 +58,10 @@ void CR3BPModel::derivatives(
         - mu*z/std::pow(r2, 3);
 
     dvel_dt[0] = Eigen::Vector3d(ax, ay, az);
+
+    if (control) {
+        dvel_dt[0] += control->getAcceleration(t, r, v);
+    }
 
 }
 

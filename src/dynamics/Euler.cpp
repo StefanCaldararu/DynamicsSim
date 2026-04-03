@@ -2,7 +2,7 @@
 
 namespace Dynamics {
 
-void Euler::step(std::vector<Body>& bodies, ODE& model, double dt) {
+void Euler::step(double t, std::vector<Body>& bodies, ODE& model, double dt) {
 
     int n = bodies.size();
 
@@ -13,7 +13,7 @@ void Euler::step(std::vector<Body>& bodies, ODE& model, double dt) {
     }
 
     std::vector<Eigen::Vector3d> dx, dv;
-    model.derivatives(x, v, dx, dv);
+    model.derivatives(t, x, v, dx, dv);
 
     for (int i = 0; i < n; i++) {
         bodies[i].setPosition(x[i] + dt * dx[i]);

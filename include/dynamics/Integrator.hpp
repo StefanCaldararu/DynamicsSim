@@ -10,6 +10,7 @@ public:
     virtual ~Integrator() = default;
 
     virtual void step(
+        double t,
         std::vector<Body>& bodies,
         ODE& model,
         double dt

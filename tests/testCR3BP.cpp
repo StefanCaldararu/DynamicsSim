@@ -14,7 +14,7 @@ TEST(CR3BPTest, posDerivativeEqualVel) {
     std::vector<Eigen::Vector3d> dpos_dt;
     std::vector<Eigen::Vector3d> dvel_dt;
 
-    model.derivatives(positions, velocities, dpos_dt, dvel_dt);
+    model.derivatives(0.0, positions, velocities, dpos_dt, dvel_dt);
 
 
     for(int i = 0; i < 3; i++){
@@ -40,7 +40,7 @@ TEST(CR3BPTest, LagrangePoint4Test) {
     std::vector<Eigen::Vector3d> dpos_dt;
     std::vector<Eigen::Vector3d> dvel_dt;
 
-    model.derivatives(positions, velocities, dpos_dt, dvel_dt);
+    model.derivatives(0.0, positions, velocities, dpos_dt, dvel_dt);
     
     EXPECT_NEAR(dpos_dt[0][0], 0.0, 1e-5);
     EXPECT_NEAR(dpos_dt[0][1], 0.0, 1e-5);

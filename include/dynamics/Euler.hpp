@@ -5,7 +5,7 @@ namespace Dynamics {
 
 class Euler : public Integrator {
 public:
-    void step(std::vector<Body>& bodies, ODE& model, double dt) override;
+    void step(double t, std::vector<Body>& bodies, ODE& model, double dt) override;
 };
 
 }

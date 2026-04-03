@@ -9,6 +9,7 @@ public:
     virtual ~ODE() = default;
 
     virtual void derivatives(
+        double t,
         const std::vector<Eigen::Vector3d>& positions,
         const std::vector<Eigen::Vector3d>& velocities,
         std::vector<Eigen::Vector3d>& dpos_dt,

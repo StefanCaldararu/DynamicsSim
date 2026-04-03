@@ -1,4 +1,4 @@
-#include "dynamics/dynamics.hpp"
+#include "dynamics/Dynamics.hpp"
 #include <stdexcept>
 
 namespace Dynamics {
@@ -33,7 +33,7 @@ void Dynamics::step(double dt) {
         throw std::runtime_error("Dynamics: model or integrator not set");
     }
 
-    integrator->step(bodies, *model, dt);
+    integrator->step(time, bodies, *model, dt);
     time += dt;
 }
 
