@@ -65,4 +65,23 @@ void CR3BPModel::derivatives(
 
 }
 
+double CR3BPModel::getJacobiConstant(const Eigen::Vector3d& position,
+                                     const Eigen::Vector3d& velocity) const {
+    double x = position.x();
+    double y = position.y();
+    double z = position.z();
+
+    double vx = velocity.x();
+    double vy = velocity.y();
+    double vz = velocity.z();
+
+    double r1 = std::sqrt((x + mu)*(x + mu) + y*y + z*z);
+    double r2 = std::sqrt((x - (1 - mu))*(x - (1 - mu)) + y*y + z*z);
+
+    double potential = 0.5 * (x*x + y*y) + (1 - mu) / r1 + mu / r2;
+    double kinetic = 0.5 * (vx*vx + vy*vy + vz*vz);
+
+    return 2.0 * potential - (vx*vx + vy*vy + vz*vz);
+}
+
 }
