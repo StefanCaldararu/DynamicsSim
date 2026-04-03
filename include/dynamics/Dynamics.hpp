@@ -19,7 +19,7 @@ public:
     std::vector<Body>& getBodies();
     const std::vector<Body>& getBodies() const;
 
-    void step(float dt);
+    void step(double dt);
 
 private:
     std::vector<Body> bodies;

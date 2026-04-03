@@ -9,10 +9,10 @@ int main() {
 
     Vis::Renderer renderer = {};
 
-    Dynamics::Dynamics system = Dynamics::SystemFactory::createScenario(Dynamics::Scenario::EarthMoonCR3BP_L4_Tadpole);
+    Dynamics::Dynamics system = Dynamics::SystemFactory::createScenario(Dynamics::Scenario::CR3BP_LEO);
 
 
-    const float dt = 1e-4f;
+    const double dt = 1e-4;
 
     while (renderer.isOpen()) {
 

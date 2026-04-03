@@ -16,13 +16,13 @@ class Renderer {
     private:
         sf::RenderWindow window;
         void renderGeneric(const std::vector<Dynamics::Body>& bodies);
-        float scale = -1.0f;
-        float margin = 1.2f;
+        double scale = -1.0;
+        double margin = 1.2;
 
-        std::vector<Eigen::Vector2f> spacecraftTrailWorld;
+        std::vector<Eigen::Vector2d> spacecraftTrailWorld;
         size_t maxTrailLength = 8000;
 
-        sf::Vector2f worldToScreen( const Eigen::Vector2f& world, const Eigen::Vector3f& origin, const sf::Vector2f& screen_center, float scale);
+        sf::Vector2f worldToScreen( const Eigen::Vector2d& world, const Eigen::Vector3d& origin, const sf::Vector2f& screen_center, double scale);
 };
 }
 

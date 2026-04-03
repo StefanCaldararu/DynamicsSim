@@ -23,7 +23,7 @@ const std::vector<Body>& Dynamics::getBodies() const {
     return bodies;
 }
 
-void Dynamics::step(float dt) {
+void Dynamics::step(double dt) {
 
     if (!model || !integrator) {
         throw std::runtime_error("Dynamics: model or integrator not set");

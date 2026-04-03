@@ -12,7 +12,7 @@ public:
     virtual void step(
         std::vector<Body>& bodies,
         ODE& model,
-        float dt
+        double dt
     ) = 0;
 };
 

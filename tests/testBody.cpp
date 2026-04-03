@@ -3,12 +3,12 @@
 
 
 TEST(BodyTest, Initialization) {
-    Eigen::Vector3f pos(1,2,3);
-    Eigen::Vector3f vel(0,1,0);
+    Eigen::Vector3d pos(1,2,3);
+    Eigen::Vector3d vel(0,1,0);
 
-    Dynamics::Body b(pos, vel, 5.0f, 1.0f);
+    Dynamics::Body b(pos, vel, 5.0, 1.0);
 
     EXPECT_EQ(b.getPosition(), pos);
     EXPECT_EQ(b.getVelocity(), vel);
-    EXPECT_FLOAT_EQ(b.getMass(), 5.0f);
+    EXPECT_DOUBLE_EQ(b.getMass(), 5.0);
 }

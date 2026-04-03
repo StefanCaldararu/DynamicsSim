@@ -2,37 +2,37 @@
 
 namespace Dynamics {
 
-Body::Body(const Eigen::Vector3f position_,
-           const Eigen::Vector3f velocity_,
-           float mass_,
-           float radius_)
+Body::Body(const Eigen::Vector3d position_,
+           const Eigen::Vector3d velocity_,
+           double mass_,
+           double radius_)
     : position(position_),
       velocity(velocity_),
       mass(mass_),
       radius(radius_)
 {}
 
-const Eigen::Vector3f& Body::getPosition() const {
+const Eigen::Vector3d& Body::getPosition() const {
     return position;
 }
 
-const Eigen::Vector3f& Body::getVelocity() const {
+const Eigen::Vector3d& Body::getVelocity() const {
     return velocity;
 }
 
-float Body::getMass() const {
+double Body::getMass() const {
     return mass;
 }
 
-float Body::getRadius() const {
+double Body::getRadius() const {
     return radius;
 }
 
-void Body::setPosition(const Eigen::Vector3f pos) {
+void Body::setPosition(const Eigen::Vector3d pos) {
     position = pos;
 }
 
-void Body::setVelocity(const Eigen::Vector3f vel) {
+void Body::setVelocity(const Eigen::Vector3d vel) {
     velocity = vel;
 }
 

@@ -9,12 +9,12 @@ namespace Vis{
         window.clear(sf::Color::Black);
 
         for(const auto& body: bodies){
-            Eigen::Vector3f pos = body.getPosition();
-            float radius =  body.getRadius();
+            Eigen::Vector3d pos = body.getPosition();
+            double radius =  body.getRadius();
 
-            sf::CircleShape circle(radius);
+            sf::CircleShape circle(static_cast<float>(radius));
             circle.setFillColor(sf::Color::White);
-            circle.setPosition({pos.x() - radius, pos.y() - radius});
+            circle.setPosition({static_cast<float>(pos.x() - radius), static_cast<float>(pos.y() - radius)});
 
             window.draw(circle);
         }
@@ -33,14 +33,14 @@ namespace Vis{
     }
 
     sf::Vector2f Vis::Renderer::worldToScreen(
-        const Eigen::Vector2f& world,
-        const Eigen::Vector3f& origin,
+        const Eigen::Vector2d& world,
+        const Eigen::Vector3d& origin,
         const sf::Vector2f& screen_center,
-        float scale)
+        double scale)
     {
-        float x = screen_center.x + (world.x() - origin.x()) * scale;
-        float y = screen_center.y - (world.y() - origin.y()) * scale;
-        return sf::Vector2f(x, y);
+        double x = screen_center.x + (world.x() - origin.x()) * scale;
+        double y = screen_center.y - (world.y() - origin.y()) * scale;
+        return sf::Vector2f(static_cast<float>(x), static_cast<float>(y));
     }
     
 
@@ -53,25 +53,25 @@ namespace Vis{
         }
 
         window.clear(sf::Color::Black);
-        float width = window.getSize().x;
-        float height = window.getSize().y;
-        sf::Vector2f screen_center(width / 2.0f, height / 2.0f);
+        double width = window.getSize().x;
+        double height = window.getSize().y;
+        sf::Vector2f screen_center(width / 2.0, height / 2.0);
 
         const auto& p1_body = bodies[1];
-        Eigen::Vector3f p1 = p1_body.getPosition();
+        Eigen::Vector3d p1 = p1_body.getPosition();
 
-        Eigen::Vector3f spacecraft = bodies[0].getPosition();
-        spacecraftTrailWorld.push_back(Eigen::Vector2f(spacecraft.x(), spacecraft.y()));
+        Eigen::Vector3d spacecraft = bodies[0].getPosition();
+        spacecraftTrailWorld.push_back(Eigen::Vector2d(spacecraft.x(), spacecraft.y()));
 
         if (spacecraftTrailWorld.size() > maxTrailLength){
             spacecraftTrailWorld.erase(spacecraftTrailWorld.begin());
         }
 
-        float max_dx = 0.0f;
-        float max_dy = 0.0f;
+        double max_dx = 0.0;
+        double max_dy = 0.0;
 
         for (const auto& body : bodies) {
-            Eigen::Vector3f pos = body.getPosition();
+            Eigen::Vector3d pos = body.getPosition();
             max_dx = std::max(max_dx, std::abs(pos.x() - p1.x()));
             max_dy = std::max(max_dy, std::abs(pos.y() - p1.y()));
         }
@@ -79,12 +79,12 @@ namespace Vis{
         max_dx *= margin;
         max_dy *= margin;
 
-        float scale_x = (2.0f/3.0f * width) / (max_dx + 1e-5f);
-        float scale_y = (0.5f * height) / (max_dy + 1e-5f);
+        double scale_x = (2.0/3.0 * width) / (max_dx + 1e-5);
+        double scale_y = (0.5 * height) / (max_dy + 1e-5);
 
-        float new_scale = std::min(scale_x, scale_y);
+        double new_scale = std::min(scale_x, scale_y);
 
-        if (scale < 0.0f)
+        if (scale < 0.0)
             scale = new_scale;
         else if (new_scale < scale)
             scale = new_scale;
@@ -95,7 +95,7 @@ namespace Vis{
             for (size_t i = 0; i < spacecraftTrailWorld.size(); i++) {
                 sf::Vector2f screen_pos = worldToScreen(spacecraftTrailWorld[i], p1, screen_center, scale);
 
-                float alpha = 255.0f * (float(i) / spacecraftTrailWorld.size());
+                double alpha = 255.0 * (double(i) / spacecraftTrailWorld.size());
 
                 vertices[i].position = screen_pos;
                 vertices[i].color = sf::Color(255, 255, 255,static_cast<uint8_t>(alpha));
@@ -105,14 +105,14 @@ namespace Vis{
         }
 
         for(const auto& body: bodies){
-            Eigen::Vector3f pos = body.getPosition();
-            float radius = body.getRadius();
+            Eigen::Vector3d pos = body.getPosition();
+            double radius = body.getRadius();
 
-            float x = screen_center.x + (pos.x() - p1.x()) * scale;
-            float y = screen_center.y - (pos.y() - p1.y()) * scale;
+            double x = screen_center.x + (pos.x() - p1.x()) * scale;
+            double y = screen_center.y - (pos.y() - p1.y()) * scale;
 
-            float draw_radius = std::max(2.0f, radius * 0.5f);
-            sf::CircleShape circle(draw_radius);
+            double draw_radius = std::max(2.0, radius * 0.5);
+            sf::CircleShape circle(static_cast<float>(draw_radius));
 
             if (&body == &bodies[1])
                 circle.setFillColor(sf::Color::Blue);
@@ -121,7 +121,7 @@ namespace Vis{
             else
                 circle.setFillColor(sf::Color::White);
 
-            circle.setPosition({x - draw_radius, y - draw_radius});
+            circle.setPosition({static_cast<float>(x - draw_radius), static_cast<float>(y - draw_radius)});
             window.draw(circle);
         }
 

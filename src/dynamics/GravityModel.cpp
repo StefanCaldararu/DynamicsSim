@@ -3,14 +3,14 @@
 
 namespace Dynamics {
 
-GravityModel::GravityModel(float G_, const std::vector<Body>& bodies_)
+GravityModel::GravityModel(double G_, const std::vector<Body>& bodies_)
     : G(G_), bodies(bodies_) {}
 
 void GravityModel::derivatives(
-    const std::vector<Eigen::Vector3f>& positions,
-    const std::vector<Eigen::Vector3f>& velocities,
-    std::vector<Eigen::Vector3f>& dpos_dt,
-    std::vector<Eigen::Vector3f>& dvel_dt)
+    const std::vector<Eigen::Vector3d>& positions,
+    const std::vector<Eigen::Vector3d>& velocities,
+    std::vector<Eigen::Vector3d>& dpos_dt,
+    std::vector<Eigen::Vector3d>& dvel_dt)
 {
     int n = positions.size();
 
@@ -18,17 +18,17 @@ void GravityModel::derivatives(
     dvel_dt.resize(n);
 
     for (int i = 0; i < n; i++)
-        dvel_dt[i] = Eigen::Vector3f::Zero();
+        dvel_dt[i] = Eigen::Vector3d::Zero();
 
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
 
-            Eigen::Vector3f r = positions[j] - positions[i];
-            float dist = r.norm();
+            Eigen::Vector3d r = positions[j] - positions[i];
+            double dist = r.norm();
 
-            if (dist < 1e-5f) continue;
+            if (dist < 1e-5) continue;
 
-            Eigen::Vector3f force = G * r / std::pow(dist, 3);
+            Eigen::Vector3d force = G * r / std::pow(dist, 3);
 
             dvel_dt[i] += bodies[j].getMass() * force;
             dvel_dt[j] -= bodies[i].getMass() * force;

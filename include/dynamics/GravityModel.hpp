@@ -6,17 +6,17 @@ namespace Dynamics {
 
 class GravityModel : public ODE {
 public:
-    GravityModel(float G, const std::vector<Body>& bodies);
+    GravityModel(double G, const std::vector<Body>& bodies);
 
     void derivatives(
-        const std::vector<Eigen::Vector3f>& positions,
-        const std::vector<Eigen::Vector3f>& velocities,
-        std::vector<Eigen::Vector3f>& dpos_dt,
-        std::vector<Eigen::Vector3f>& dvel_dt
+        const std::vector<Eigen::Vector3d>& positions,
+        const std::vector<Eigen::Vector3d>& velocities,
+        std::vector<Eigen::Vector3d>& dpos_dt,
+        std::vector<Eigen::Vector3d>& dvel_dt
     ) override;
 
 private:
-    float G;
+    double G;
     const std::vector<Body>& bodies;
 };
 

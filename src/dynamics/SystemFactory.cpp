@@ -45,12 +45,12 @@ Dynamics SystemFactory::createScenario(Scenario scenario) {
 }
 
 Dynamics SystemFactory::createEarthMoonCR3BP_L4() {
-    const float mu = 0.01215f;
+    const double mu = 0.01215;
     DynamicsBuilder builder;
 
-    builder.addBody(Body({0.5f - mu, 0.8660254f, 0.0f}, {0,0,0}, 0.0f, 1.0f));
-    builder.addBody(Body({-mu, 0.0f, 0.0f}, {0,0,0}, 1.0f, 10.0f));
-    builder.addBody(Body({1.0f - mu, 0.0f, 0.0f}, {0,0,0}, mu, 5.0f));
+    builder.addBody(Body({0.5 - mu, 0.8660254, 0.0}, {0,0,0}, 0.0, 1.0));
+    builder.addBody(Body({-mu, 0.0, 0.0}, {0,0,0}, 1.0, 10.0));
+    builder.addBody(Body({1.0 - mu, 0.0, 0.0}, {0,0,0}, mu, 5.0));
 
     builder.withModel(std::make_unique<CR3BPModel>(mu));
     builder.withIntegrator(std::make_unique<RK4>());
@@ -60,13 +60,13 @@ Dynamics SystemFactory::createEarthMoonCR3BP_L4() {
 
 
 Dynamics SystemFactory::createEarthMoonCR3BP_L4_Tadpole() {
-    const float mu = 0.01215f;
+    const double mu = 0.01215;
     DynamicsBuilder builder;
     // Short period L4 orbit grabbed from ID 768
     // https://ssd.jpl.nasa.gov/tools/periodic_orbits.html
-    builder.addBody(Body({4.8784941344943100e-1f, 1.3592776304398071f, 0.f}, {7.3994557499431435e-1f, -3.6396916907329402e-1f, 0.f}, 0.f, 1.0f));
-    builder.addBody(Body({-mu, 0.0f, 0.0f}, {0,0,0}, 1.0f, 10.0f));
-    builder.addBody(Body({1.0f - mu, 0.0f, 0.0f}, {0,0,0}, mu, 5.0f));
+    builder.addBody(Body({4.8784941344943100e-1, 1.3592776304398071, 0.}, {7.3994557499431435e-1, -3.6396916907329402e-1, 0.}, 0., 1.0));
+    builder.addBody(Body({-mu, 0.0, 0.0}, {0,0,0}, 1.0, 10.0));
+    builder.addBody(Body({1.0 - mu, 0.0, 0.0}, {0,0,0}, mu, 5.0));
 
     builder.withModel(std::make_unique<CR3BPModel>(mu));
     builder.withIntegrator(std::make_unique<RK4>());
@@ -77,10 +77,10 @@ Dynamics SystemFactory::createEarthMoonCR3BP_L4_Tadpole() {
 Dynamics SystemFactory::createTwoBodyMutual() {
     Dynamics system;
 
-    system.addBody(Body({-0.5f, 0.0f, 0.0f}, {0.0f, 0.65f, 0.0f}, 10.0f, 1.0f));
-    system.addBody(Body({0.5f, 0.0f, 0.0f}, {0.0f, -0.65f, 0.0f}, 10.0f, 1.0f));
+    system.addBody(Body({-0.5, 0.0, 0.0}, {0.0, 0.65, 0.0}, 10.0, 1.0));
+    system.addBody(Body({0.5, 0.0, 0.0}, {0.0, -0.65, 0.0}, 10.0, 1.0));
 
-    system.setModel(std::make_unique<GravityModel>(1.0f, system.getBodies()));
+    system.setModel(std::make_unique<GravityModel>(1.0, system.getBodies()));
     system.setIntegrator(std::make_unique<RK4>());
 
     return system;
@@ -89,10 +89,10 @@ Dynamics SystemFactory::createTwoBodyMutual() {
 Dynamics SystemFactory::createOneLargeOneSmall() {
     Dynamics system;
 
-    system.addBody(Body({0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, 1000.0f, 10.0f));
-    system.addBody(Body({5.0f, 0.0f, 0.0f}, {0.0f, 4.5f, 0.0f}, 1.0f, 0.5f));
+    system.addBody(Body({0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, 1000.0, 10.0));
+    system.addBody(Body({5.0, 0.0, 0.0}, {0.0, 4.5, 0.0}, 1.0, 0.5));
 
-    system.setModel(std::make_unique<GravityModel>(1.0f, system.getBodies()));
+    system.setModel(std::make_unique<GravityModel>(1.0, system.getBodies()));
     system.setIntegrator(std::make_unique<Euler>());
 
     return system;
@@ -101,29 +101,29 @@ Dynamics SystemFactory::createOneLargeOneSmall() {
 Dynamics SystemFactory::createThreeBodyStable() {
     Dynamics system;
 
-    system.addBody(Body({0.0f, -1.0f, 0.0f}, {0.58f, 0.0f, 0.0f}, 1.0f, 1.0f));
-    system.addBody(Body({0.8660254f, 0.5f, 0.0f}, {-0.29f, 0.5f, 0.0f}, 1.0f, 1.0f));
-    system.addBody(Body({-0.8660254f, 0.5f, 0.0f}, {-0.29f, -0.5f, 0.0f}, 1.0f, 1.0f));
+    system.addBody(Body({0.0, -1.0, 0.0}, {0.58, 0.0, 0.0}, 1.0, 1.0));
+    system.addBody(Body({0.8660254, 0.5, 0.0}, {-0.29, 0.5, 0.0}, 1.0, 1.0));
+    system.addBody(Body({-0.8660254, 0.5, 0.0}, {-0.29, -0.5, 0.0}, 1.0, 1.0));
 
-    system.setModel(std::make_unique<GravityModel>(1.0f, system.getBodies()));
+    system.setModel(std::make_unique<GravityModel>(1.0, system.getBodies()));
     system.setIntegrator(std::make_unique<RK4>());
 
     return system;
 }
 
 Dynamics SystemFactory::createCR3BPLEO() {
-    const float mu = 0.01215f;
+    const double mu = 0.01215;
     DynamicsBuilder builder;
 
-    float r_leo = 0.0176f;
-    float x = -mu + r_leo;
-    float y = 0.0f;
-    float v_inertial = std::sqrt((1.0f - mu) / r_leo);
-    float vy = v_inertial - x;
+    double r_leo = 0.0176;
+    double x = -mu + r_leo;
+    double y = 0.0;
+    double v_inertial = std::sqrt((1.0 - mu) / r_leo);
+    double vy = v_inertial - x;
     
-    builder.addBody(Body({x, y, 0.0f}, {0.0f, vy, 0.0f}, 0.0f, 1.0f));
-    builder.addBody(Body({-mu, 0.0f, 0.0f}, {0,0,0}, 1.0f, 10.0f));
-    builder.addBody(Body({1.0f - mu, 0.0f, 0.0f}, {0,0,0}, mu, 5.0f));
+    builder.addBody(Body({x, y, 0.0}, {0.0, vy, 0.0}, 0.0, 1.0));
+    builder.addBody(Body({-mu, 0.0, 0.0}, {0,0,0}, 1.0, 10.0));
+    builder.addBody(Body({1.0 - mu, 0.0, 0.0}, {0,0,0}, mu, 5.0));
 
     builder.withModel(std::make_unique<CR3BPModel>(mu));
     builder.withIntegrator(std::make_unique<RK4>());
