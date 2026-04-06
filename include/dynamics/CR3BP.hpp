@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CR3BP_MODEL_H
+#define CR3BP_MODEL_H
 #include "ODE.hpp"
 #include "control/Control.hpp"
 #include <memory>
@@ -25,3 +26,4 @@ private:
 };
 
 }
+#endif
