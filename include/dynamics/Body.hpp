@@ -8,23 +8,25 @@ namespace Dynamics{
     class Body {
         public:
 
-            Body(Eigen::Vector3d position, Eigen::Vector3d velocity, double mass, double radius);
+            Body(Eigen::Vector3d position_, Eigen::Vector3d velocity_, double mass_, double radius_);
             
-            const Eigen::Vector3d& getPosition() const;
-            const Eigen::Vector3d& getVelocity() const;
+            const Eigen::Vector3d getPosition() const;
+            const Eigen::Vector3d getVelocity() const;
             double getMass() const;
             double getRadius() const;
+            std::vector<double> getState();
 
             void setPosition(Eigen::Vector3d position);
             void setVelocity(Eigen::Vector3d velocity);
+            void setState(std::vector<double> state);
 
 
 
 
 
         private:
-            Eigen::Vector3d position;
-            Eigen::Vector3d velocity;
+            //Assumed <x, y, z, dx, dy, dz, ANYTHING ELSE>
+            std::vector<double> state; 
             double mass;
             double radius;
 
