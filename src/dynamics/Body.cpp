@@ -10,6 +10,15 @@ Body::Body(Eigen::Vector3d position_, Eigen::Vector3d velocity_, double mass_, d
     radius = radius_;
 }
 
+Body::Body(std::vector<double> state_, double mass_, double radius_){
+    if (state_.size() < 6) {
+        throw std::invalid_argument("State vector must have at least 6 elements");
+    }
+    state = state_;
+    mass = mass_;
+    radius = radius_;
+}
+
 const Eigen::Vector3d Body::getPosition() const{
     return Eigen::Vector3d(state[0], state[1], state[2]);
 }

@@ -9,7 +9,7 @@ namespace Dynamics{
         public:
 
             Body(Eigen::Vector3d position_, Eigen::Vector3d velocity_, double mass_, double radius_);
-            
+            Body(std::vector<double> state_, double mass_, double radius_);
             const Eigen::Vector3d getPosition() const;
             const Eigen::Vector3d getVelocity() const;
             double getMass() const;
