@@ -18,6 +18,8 @@ public:
         std::vector<Eigen::Vector3d>& dvel_dt
     ) override;
 
+double getJacobiConstant(const Eigen::Vector3d& position, const Eigen::Vector3d& velocity) const override;
+
 private:
     double G;
     const std::vector<Body>& bodies;

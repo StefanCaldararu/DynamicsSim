@@ -18,7 +18,7 @@ public:
     void addBody(const Body& body);
     std::vector<Body>& getBodies();
     const std::vector<Body>& getBodies() const;
-
+    double getJacobiConstant();
     void step(double dt);
     double getTime();
 

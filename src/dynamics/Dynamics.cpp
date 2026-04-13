@@ -37,4 +37,8 @@ void Dynamics::step(double dt) {
     time += dt;
 }
 
+double Dynamics::getJacobiConstant(){
+    return model->getJacobiConstant(bodies[0].getPosition(), bodies[0].getVelocity());
+}
+
 }

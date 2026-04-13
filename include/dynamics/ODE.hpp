@@ -15,6 +15,8 @@ public:
         std::vector<Eigen::Vector3d>& dpos_dt,
         std::vector<Eigen::Vector3d>& dvel_dt
     ) = 0;
+
+virtual double getJacobiConstant(const Eigen::Vector3d& position, const Eigen::Vector3d& velocity) const = 0;
 };
 
 }

@@ -42,6 +42,8 @@ Dynamics SystemFactory::createScenario(Scenario scenario) {
             return createCR3BPLEO();
         case Scenario::CR3BP_EarthOrbit:
             return createCR3BP_EarthOrbit();
+        case Scenario::CR3BPhalo:
+            return createEarthMoonCR3BP_L2_halo();
         default:
             return createEarthMoonCR3BP_L4();
     }
@@ -52,6 +54,20 @@ Dynamics SystemFactory::createEarthMoonCR3BP_L4() {
     DynamicsBuilder builder;
 
     builder.addBody(Body({0.5 - mu, 0.8660254, 0.0}, {0,0,0}, 0.0, 1.0));
+    builder.addBody(Body({-mu, 0.0, 0.0}, {0,0,0}, 1.0, 10.0));
+    builder.addBody(Body({1.0 - mu, 0.0, 0.0}, {0,0,0}, mu, 5.0));
+
+    builder.withModel(std::make_unique<CR3BPModel>(mu));
+    builder.withIntegrator(std::make_unique<RK4>());
+
+    return builder.build();
+}
+
+Dynamics SystemFactory::createEarthMoonCR3BP_L2_halo(){
+    //1.1805068248439281E+0	-3.3114436259161434E-27	1.9906874796338979E-2	3.3672394329658290E-15	-1.5811356683023692E-1	2.2436379855191516E-15
+    const double mu = 0.01215;
+    DynamicsBuilder builder;
+    builder.addBody(Body({1.1805068248439281, -3.3114436259161434e-27, 1.9906874796338979e-2}, {3.3672394329658290e-15, -1.5811356683023692e-1, 2.2436379855191516e-15}, 0., 1.0));
     builder.addBody(Body({-mu, 0.0, 0.0}, {0,0,0}, 1.0, 10.0));
     builder.addBody(Body({1.0 - mu, 0.0, 0.0}, {0,0,0}, mu, 5.0));
 

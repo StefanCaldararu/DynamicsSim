@@ -6,6 +6,10 @@ namespace Dynamics {
 GravityModel::GravityModel(double G_, const std::vector<Body>& bodies_, std::unique_ptr<Control> control_)
     : G(G_), bodies(bodies_), control(std::move(control_)) {}
 
+double GravityModel::getJacobiConstant(const Eigen::Vector3d& position, const Eigen::Vector3d& velocity) const{
+    return 0.;
+}
+
 void GravityModel::derivatives(
     double t,
     const std::vector<Eigen::Vector3d>& positions,

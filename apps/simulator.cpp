@@ -9,18 +9,20 @@ int main() {
 
     Vis::Renderer renderer = {};
 
-    Dynamics::Dynamics system = Dynamics::SystemFactory::createScenario(Dynamics::Scenario::CR3BP_EarthOrbit);
+    Dynamics::Dynamics system = Dynamics::SystemFactory::createScenario(Dynamics::Scenario::EarthMoonCR3BP_L4_Tadpole);
 
 
-    const double dt = 1e-4;
-
+    const double dt = 1e-5;
+    int stepcount = 1000;
     while (renderer.isOpen()) {
-
         renderer.handleEvent();
-
         system.step(dt);
-
-        renderer.update(system.getBodies(), system.getTime());
+        double jc = system.getJacobiConstant();
+        if(stepcount == 1000){
+            stepcount = 0;
+            renderer.update(system.getBodies(), system.getTime(), jc);
+        }
+        stepcount++;
     }
 
     return 0;
