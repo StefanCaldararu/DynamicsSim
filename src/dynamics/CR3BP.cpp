@@ -1,6 +1,5 @@
 #include "dynamics/CR3BP.hpp"
 #include <cmath>
-#include <iostream>
 
 namespace Dynamics {
 
@@ -61,12 +60,7 @@ void CR3BPModel::derivatives(
     dvel_dt[0] = Eigen::Vector3d(ax, ay, az);
 
     if (control) {
-        std::cout << "[CR3BP::derivatives] Control pointer exists, calling getAcceleration() at t=" << t << std::endl;
-        std::cout.flush();
         dvel_dt[0] += control->getAcceleration(t, r, v);
-    } else {
-        std::cout << "[CR3BP::derivatives] Control pointer is NULL at t=" << t << std::endl;
-        std::cout.flush();
     }
 
 }
@@ -88,6 +82,14 @@ double CR3BPModel::getJacobiConstant(const Eigen::Vector3d& position,
     double kinetic = 0.5 * (vx*vx + vy*vy + vz*vz);
 
     return 2.0 * potential - (vx*vx + vy*vy + vz*vz);
+}
+
+std::string CR3BPModel::getControlInfo() const {
+    if (control) {
+        return control->toString();
+    } else {
+        return "No control applied";
+    }
 }
 
 }

@@ -19,6 +19,8 @@ public:
 
     double getJacobiConstant(const Eigen::Vector3d& position, const Eigen::Vector3d& velocity) const;
 
+    std::string getControlInfo() const;
+
 private:
     double mu;
     std::unique_ptr<Control> control;
