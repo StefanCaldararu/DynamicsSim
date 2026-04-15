@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DYNAMICS_HPP
+#define DYNAMICS_HPP
 #include <vector>
 #include <memory>
 
@@ -22,6 +23,8 @@ public:
     void step(double dt);
     double getTime();
 
+    ODE* getModel() const;
+
 private:
     std::vector<Body> bodies;
 
@@ -31,3 +34,4 @@ private:
 };
 
 }
+#endif
