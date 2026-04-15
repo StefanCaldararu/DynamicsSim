@@ -10,6 +10,8 @@ public:
 
     virtual Eigen::Vector3d getAcceleration(double t, const Eigen::Vector3d& position, const Eigen::Vector3d& velocity
     ) = 0;
+
+    virtual std::string toString() const = 0;
 };
 
 }

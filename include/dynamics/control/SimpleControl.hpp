@@ -9,6 +9,7 @@ class SimpleControl : public Control {
 public:
     SimpleControl(double dv_, double burnDuration_, double burnStartTime_);
     Eigen::Vector3d getAcceleration(double t, const Eigen::Vector3d& position, const Eigen::Vector3d& velocity) override;
+    std::string toString() const override;
 private:
     double dv;
     double burnDuration;
