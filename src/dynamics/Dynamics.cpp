@@ -27,6 +27,10 @@ double Dynamics::getTime() {
     return time;
 }
 
+ODE* Dynamics::getModel() const {
+    return model.get();
+}
+
 void Dynamics::step(double dt) {
 
     if (!model || !integrator) {
