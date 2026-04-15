@@ -31,6 +31,7 @@ add_library(dynamics
     src/dynamics/CR3BP.cpp
     src/dynamics/control/NoControl.cpp
     src/dynamics/control/SimpleControl.cpp
+    src/dynamics/control/EnsembleControl.cpp
 )
 
 target_link_libraries(dynamics PUBLIC Eigen3::Eigen)
