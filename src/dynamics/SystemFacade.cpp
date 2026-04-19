@@ -79,8 +79,8 @@ Dynamics SystemFacade::createEarthMoonCR3BP_L4_Tadpole() {
 Dynamics SystemFacade::createTwoBodyMutual() {
     DynamicsBuilder builder;
 
-    Body body1 = Body({-0.5, 0.0, 0.0}, {0.0, 0.65, 0.0}, 10.0, 1.0);
-    Body body2 = Body({0.5, 0.0, 0.0}, {0.0, -0.65, 0.0}, 10.0, 1.0); 
+    Body body1 = Body({-0.5, 0.0, 0.0}, {0.0, 1.85, 0.0}, 10.0, 1.0);
+    Body body2 = Body({0.5, 0.0, 0.0}, {0.0, -1.85, 0.0}, 10.0, 1.0); 
 
     builder.addBody(body1).addBody(body2).withModel(std::make_unique<GravityModel>(1.0, builder.getBodies())).withIntegrator(std::make_unique<RK4>());
 
@@ -90,8 +90,8 @@ Dynamics SystemFacade::createTwoBodyMutual() {
 Dynamics SystemFacade::createOneLargeOneSmall() {
     DynamicsBuilder builder;
 
-    Body large = Body({0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, 1000.0, 10.0);
-    Body small = Body({5.0, 0.0, 0.0}, {0.0, 4.5, 0.0}, 1.0, 0.5);
+    Body large = Body({0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, 1000.0, 5.0);
+    Body small = Body({5.0, 0.0, 0.0}, {0.0, 9.5, 0.0}, 1.0, 0.1);
 
     builder.addBody(large).addBody(small).withModel(std::make_unique<GravityModel>(1.0, builder.getBodies())).withIntegrator(std::make_unique<Euler>());
 
