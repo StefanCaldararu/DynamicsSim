@@ -20,7 +20,7 @@ public:
 
 private:
     double G;
-    const std::vector<Body>& bodies;
+    std::vector<Body> bodies;
     std::unique_ptr<Control> control;
 };
 
