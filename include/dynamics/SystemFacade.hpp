@@ -1,5 +1,5 @@
-#ifndef SYSTEM_FACTORY_H
-#define SYSTEM_FACTORY_H
+#ifndef SYSTEM_FACADE_H
+#define SYSTEM_FACADE_H
 
 #include "Dynamics.hpp"
 #include "Body.hpp"
@@ -25,6 +25,7 @@ public:
     DynamicsBuilder& withModel(std::unique_ptr<ODE> model);
     DynamicsBuilder& withIntegrator(std::unique_ptr<Integrator> integrator);
     DynamicsBuilder& addBody(const Body& body);
+    std::vector<Body> getBodies();
 
     Dynamics build();
 
@@ -32,7 +33,7 @@ private:
     Dynamics system;
 };
 
-class SystemFactory {
+class SystemFacade {
 public:
     static Dynamics createScenario(Scenario scenario);
 
@@ -42,7 +43,6 @@ public:
     static Dynamics createOneLargeOneSmall();
     static Dynamics createThreeBodyStable();
     static Dynamics createCR3BPLEO();
-    static Dynamics createCR3BP_EarthOrbit();
 };
 
 } // namespace Dynamics
