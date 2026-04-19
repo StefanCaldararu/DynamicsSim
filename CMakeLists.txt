@@ -5,7 +5,6 @@ project(DynamicsSim)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# ---- Dependencies ----
 find_package(SFML 3 COMPONENTS Graphics Window System REQUIRED)
 find_package(Eigen3 REQUIRED)
 include(FetchContent)
@@ -19,7 +18,6 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-# ---- Libraries ----
 
 add_library(dynamics
     src/dynamics/Body.cpp
@@ -39,7 +37,9 @@ target_include_directories(dynamics PUBLIC include)
 
 
 add_library(vis
-    src/vis/renderer.cpp
+    src/vis/Renderer.cpp
+    src/vis/Controller.cpp
+    src/vis/View.cpp
 )
 
 target_link_libraries(vis
@@ -67,7 +67,6 @@ target_link_libraries(tests
 include(GoogleTest)
 gtest_discover_tests(tests)
 
-# ---- Executable ----
 
 add_executable(simulator
     apps/simulator.cpp
