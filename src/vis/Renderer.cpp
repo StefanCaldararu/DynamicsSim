@@ -1,6 +1,9 @@
 #include "vis/Renderer.hpp"
 #include <iomanip>
 #include <sstream>
+#include <iostream>
+#include <limits>
+#include <algorithm>
 
 namespace Vis{
     Renderer::Renderer() : infoText(font){
@@ -19,16 +22,57 @@ namespace Vis{
     void Renderer::renderGeneric(const std::vector<Dynamics::Body>& bodies){
         window.clear(sf::Color::Black);
 
+        if (bodies.empty()) {
+            window.display();
+            return;
+        }
+
+        double width = window.getSize().x;
+        double height = window.getSize().y;
+        sf::Vector2f screen_center(width / 2.0f, height / 2.0f);
+
+        // Find bounding box
+        double min_x = std::numeric_limits<double>::max();
+        double max_x = std::numeric_limits<double>::lowest();
+        double min_y = std::numeric_limits<double>::max();
+        double max_y = std::numeric_limits<double>::lowest();
+
         for(const auto& body: bodies){
             Eigen::Vector3d pos = body.getPosition();
-            double radius =  body.getRadius();
+            min_x = std::min(min_x, pos.x());
+            max_x = std::max(max_x, pos.x());
+            min_y = std::min(min_y, pos.y());
+            max_y = std::max(max_y, pos.y());
+        }
 
-            sf::CircleShape circle(static_cast<float>(radius));
+        double max_dist = 0.0;
+        max_dist = std::max(max_dist, std::abs(min_x));
+        max_dist = std::max(max_dist, std::abs(max_x));
+        max_dist = std::max(max_dist, std::abs(min_y));
+        max_dist = std::max(max_dist, std::abs(max_y));
+
+        double scale_x = (width / 2.0 * 0.8) / (max_dist + 1e-5);
+        double scale_y = (height / 2.0 * 0.8) / (max_dist + 1e-5);
+        double new_scale = std::min(scale_x, scale_y);
+
+        genericScale = std::min(genericScale, new_scale);
+
+        for(const auto& body: bodies){
+            Eigen::Vector3d pos = body.getPosition();
+            double radius = body.getRadius();
+
+            float x = screen_center.x + static_cast<float>((pos.x() - 0.0) * genericScale);
+            float y = screen_center.y - static_cast<float>((pos.y() - 0.0) * genericScale);
+
+            double draw_radius = std::max(5.0, radius * genericScale * 0.1); 
+            draw_radius = std::min(draw_radius, 50.0);
+            sf::CircleShape circle(static_cast<float>(draw_radius));
             circle.setFillColor(sf::Color::White);
-            circle.setPosition({static_cast<float>(pos.x() - radius), static_cast<float>(pos.y() - radius)});
+            circle.setPosition({x - static_cast<float>(draw_radius), y - static_cast<float>(draw_radius)});
 
             window.draw(circle);
         }
+        renderInfoPanel(currentSimTime, bodies);
         window.display();
     }
 
@@ -61,7 +105,7 @@ namespace Vis{
 
 
     void Renderer::update(const std::vector<Dynamics::Body>& bodies, double simTime){
-
+        currentSimTime = simTime;
         if (bodies.size() != 3){
             renderGeneric(bodies);
             return;

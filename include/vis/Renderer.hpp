@@ -20,7 +20,9 @@ class Renderer {
         void renderInfoPanel(double simTime, const std::vector<Dynamics::Body>& bodies);
         sf::RenderWindow window;
         double scale = -1.0;
+        double genericScale = 1e9; 
         double margin = 1.2;
+        double currentSimTime = -1.0;
 
         std::vector<Eigen::Vector2d> spacecraftTrailWorld;
         size_t maxTrailLength = 8000;
