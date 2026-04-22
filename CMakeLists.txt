@@ -18,6 +18,14 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+option(ENABLE_COVERAGE "Enable coverage reporting" OFF)
+
+if(ENABLE_COVERAGE)
+    message(STATUS "Coverage enabled")
+
+    add_compile_options(--coverage -O0 -g)
+    add_link_options(--coverage)
+endif()
 
 add_library(dynamics
     src/dynamics/Body.cpp
