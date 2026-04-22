@@ -1,14 +1,13 @@
 #ifndef CR3BP_MODEL_H
 #define CR3BP_MODEL_H
 #include "ODE.hpp"
-#include "control/Control.hpp"
 #include <memory>
 
 namespace Dynamics {
 
 class CR3BPModel : public ODE {
 public:
-    CR3BPModel(double mu_, std::unique_ptr<Control> control_ = nullptr);
+    CR3BPModel(double mu_);
 
     void derivatives(
         double t,
@@ -20,11 +19,8 @@ public:
 
     double getJacobiConstant(const Eigen::Vector3d& position, const Eigen::Vector3d& velocity) const;
 
-    std::string getControlInfo() const;
-
 private:
     double mu;
-    std::unique_ptr<Control> control;
 };
 
 }

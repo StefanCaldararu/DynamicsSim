@@ -3,8 +3,8 @@
 
 namespace Dynamics {
 
-CR3BPModel::CR3BPModel(double mu_, std::unique_ptr<Control> control_)
-    : mu(mu_), control(std::move(control_))
+CR3BPModel::CR3BPModel(double mu_)
+    : mu(mu_)
 {}
 
 void CR3BPModel::derivatives(
@@ -59,10 +59,6 @@ void CR3BPModel::derivatives(
 
     dvel_dt[0] = Eigen::Vector3d(ax, ay, az);
 
-    if (control) {
-        dvel_dt[0] += control->getAcceleration(t, r, v);
-    }
-
 }
 
 double CR3BPModel::getJacobiConstant(const Eigen::Vector3d& position,
@@ -83,13 +79,4 @@ double CR3BPModel::getJacobiConstant(const Eigen::Vector3d& position,
 
     return 2.0 * potential - (vx*vx + vy*vy + vz*vz);
 }
-
-std::string CR3BPModel::getControlInfo() const {
-    if (control) {
-        return control->toString();
-    } else {
-        return "No control applied";
-    }
-}
-
 }

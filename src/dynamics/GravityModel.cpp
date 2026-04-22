@@ -3,8 +3,8 @@
 
 namespace Dynamics {
 
-GravityModel::GravityModel(double G_, const std::vector<Body>& bodies_, std::unique_ptr<Control> control_)
-    : G(G_), bodies(bodies_), control(std::move(control_)) {}
+GravityModel::GravityModel(double G_, const std::vector<Body>& bodies_)
+    : G(G_), bodies(bodies_){}
 
 void GravityModel::derivatives(
     double t,
@@ -36,9 +36,6 @@ void GravityModel::derivatives(
         }
     }
 
-    if (control && n > 0) {
-        dvel_dt[0] += control->getAcceleration(t, positions[0], velocities[0]);
-    }
 }
 
 }

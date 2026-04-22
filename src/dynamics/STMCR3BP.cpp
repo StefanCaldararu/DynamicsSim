@@ -2,8 +2,8 @@
 
 namespace Dynamics {
 
-    STMCR3BPModel::STMCR3BPModel(double mu_, std::unique_ptr<Control> control_)
-        : CR3BPModel(mu_, std::move(control_))
+    STMCR3BPModel::STMCR3BPModel(double mu_)
+        : CR3BPModel(mu_)
     {}
 
     void CR3BPModel::derivatives42(double t, const std::vector<Eigen::Vector3d>& positions, const std::vector<Eigen::Vector3d>& velocities, std::vector<Eigen::Vector3d>& dpos_dt, std::vector<Eigen::Vector3d>& dvel_dt, Eigen::Matrix<double, 6, 6>& dPhi_dt) {

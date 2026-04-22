@@ -3,7 +3,6 @@
 #include "dynamics/GravityModel.hpp"
 #include "dynamics/RK4.hpp"
 #include "dynamics/Euler.hpp"
-#include "dynamics/control/SimpleControl.hpp"
 
 namespace Dynamics {
 

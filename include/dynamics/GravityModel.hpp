@@ -1,14 +1,13 @@
 #pragma once
 #include "ODE.hpp"
 #include "Body.hpp"
-#include "control/Control.hpp"
 #include <memory>
 
 namespace Dynamics {
 
 class GravityModel : public ODE {
 public:
-    GravityModel(double G, const std::vector<Body>& bodies, std::unique_ptr<Control> control_ = nullptr);
+    GravityModel(double G, const std::vector<Body>& bodies);
 
     void derivatives(
         double t,
@@ -21,7 +20,6 @@ public:
 private:
     double G;
     std::vector<Body> bodies;
-    std::unique_ptr<Control> control;
 };
 
 }
