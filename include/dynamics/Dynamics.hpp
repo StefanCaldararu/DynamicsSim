@@ -18,12 +18,10 @@ public:
 
     void addBody(const Body& body);
     std::vector<Body>& getBodies();
-    const std::vector<Body>& getBodies() const;
 
     void step(double dt);
     double getTime();
 
-    ODE* getModel() const;
 
 private:
     std::vector<Body> bodies;

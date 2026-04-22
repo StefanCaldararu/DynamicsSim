@@ -19,16 +19,8 @@ std::vector<Body>& Dynamics::getBodies() {
     return bodies;
 }
 
-const std::vector<Body>& Dynamics::getBodies() const {
-    return bodies;
-}
-
 double Dynamics::getTime() {
     return time;
-}
-
-ODE* Dynamics::getModel() const {
-    return model.get();
 }
 
 void Dynamics::step(double dt) {
