@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INTEGRATOR_HPP
+#define INTEGRATOR_HPP
 #include <vector>
 #include "Body.hpp"
 #include "ODE.hpp"
@@ -18,3 +19,4 @@ public:
 };
 
 }
+#endif

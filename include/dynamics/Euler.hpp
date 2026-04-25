@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EULER_HPP
+#define EULER_HPP
 #include "Integrator.hpp"
 
 namespace Dynamics {
@@ -9,3 +10,4 @@ public:
 };
 
 }
+#endif

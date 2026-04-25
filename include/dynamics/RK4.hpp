@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RK4_HPP
+#define RK4_HPP
 #include "Integrator.hpp"
 
 namespace Dynamics {
@@ -9,3 +10,4 @@ public:
 };
 
 }
+#endif

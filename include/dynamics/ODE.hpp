@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ODE_HPP
+#define ODE_HPP
 #include <vector>
 #include <Eigen/Dense>
 
@@ -18,3 +19,4 @@ public:
 };
 
 }
+#endif

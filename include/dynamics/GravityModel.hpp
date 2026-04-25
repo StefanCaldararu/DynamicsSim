@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GRAVITY_MODEL_HPP
+#define GRAVITY_MODEL_HPP
 #include "ODE.hpp"
 #include "Body.hpp"
 #include <memory>
@@ -23,3 +24,4 @@ private:
 };
 
 }
+#endif
