@@ -7,6 +7,7 @@ namespace Dynamics{
 
     class Body {
         public:
+            static constexpr int MIN_BODY_SIZE = 6;
 
             Body(Eigen::Vector3d position_, Eigen::Vector3d velocity_, double mass_, double radius_);
             Body(std::vector<double> state_, double mass_, double radius_);

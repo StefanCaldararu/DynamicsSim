@@ -3,7 +3,7 @@
 namespace Dynamics {
 
 Body::Body(Eigen::Vector3d position_, Eigen::Vector3d velocity_, double mass_, double radius_){
-    state.resize(6);
+    state.resize(MIN_BODY_SIZE);
     setPosition(position_);
     setVelocity(velocity_);
     mass = mass_;
@@ -11,8 +11,8 @@ Body::Body(Eigen::Vector3d position_, Eigen::Vector3d velocity_, double mass_, d
 }
 
 Body::Body(std::vector<double> state_, double mass_, double radius_){
-    if (state_.size() < 6) {
-        throw std::invalid_argument("State vector must have at least 6 elements");
+    if (state_.size() < MIN_BODY_SIZE) {
+        throw std::invalid_argument("State vector too small!");
     }
     state = state_;
     mass = mass_;
