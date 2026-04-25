@@ -5,13 +5,13 @@ namespace Vis {
 Renderer::Renderer() : controller(), view() {}
 
 void Renderer::update(const std::vector<Dynamics::Body>& bodies) {
-    this->update(bodies, -1.0);
+    this->update(bodies, currentSimTime);
 }
 
 void Renderer::update(const std::vector<Dynamics::Body>& bodies, double simTime) {
     currentSimTime = simTime;
     
-    controller.setWindowSize(static_cast<float>(view.getWindow().getSize().x), static_cast<float>(view.getWindow().getSize().y));
+    controller.setWindowSize(static_cast<float>(view.WINDOW_X), static_cast<float>(view.WINDOW_Y));
     
     controller.update(bodies);
     

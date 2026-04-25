@@ -4,23 +4,10 @@
 #include <Eigen/Dense>
 #include <vector>
 #include "dynamics/Body.hpp"
+#include "vis/view.hpp"
+#include "vis/types.hpp"
 
 namespace Vis {
-
-struct ViewBody {
-    float x;
-    float y;
-    float radius;
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
-};
-
-struct TrailPoint {
-    float x;
-    float y;
-    uint8_t alpha;
-};
 
 class Controller {
 public:
@@ -45,7 +32,12 @@ private:
     Eigen::Vector2f screenCenter;
     float windowWidth = 800.0f;
     float windowHeight = 600.0f;
-    
+
+    static constexpr double MIN_DRAW_RADIUS = 3.0;
+    static constexpr double MAX_DRAW_RADIUS = 30.0;
+    static constexpr double DRAW_RADIUS_FACTOR = 0.02;
+    static constexpr double DIV_0_EPSILON = 1e-5;
+    static constexpr double WINDOW_SCALE_FACTOR = 0.4;
     static constexpr size_t MAX_TRAIL_LENGTH = 8000;
 };
 

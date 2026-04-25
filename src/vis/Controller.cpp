@@ -6,7 +6,7 @@
 namespace Vis {
 
 Controller::Controller() 
-    : viewBodies(), trails(), trailWorldPositions(), windowWidth(800.0f), windowHeight(600.0f), scale(1e9f), screenCenter(windowWidth / 2.0f, windowHeight / 2.0f) {}
+    : viewBodies(), trails(), trailWorldPositions(), windowWidth(View::WINDOW_X), windowHeight(View::WINDOW_Y), scale(1e9f), screenCenter(windowWidth / 2.0f, windowHeight / 2.0f) {}
 
 void Controller::setWindowSize(float width, float height) {
     windowWidth = width;
@@ -32,18 +32,17 @@ void Controller::update(const std::vector<Dynamics::Body>& bodies) {
         float x = screenCenter.x() + static_cast<float>(pos.x() * scale);
         float y = screenCenter.y() - static_cast<float>(pos.y() * scale);
         
-        double draw_radius = std::max(3.0, radius * scale * 0.02);
-        draw_radius = std::min(draw_radius, 30.0);
-        //TODO: fix coloring if needed, magic numbers
-        uint8_t r = 255;
-        uint8_t g = 255;
-        uint8_t b = 255;
+        double draw_radius = std::max(MIN_DRAW_RADIUS, radius * scale * DRAW_RADIUS_FACTOR);
+        draw_radius = std::min(draw_radius, MAX_DRAW_RADIUS);
+        uint8_t r = View::MAX_COLOR;
+        uint8_t g = View::MAX_COLOR;
+        uint8_t b = View::MAX_COLOR;
         if (i == 1) {
             r = 0;
             g = 0; 
-            b = 255;
+            b = View::MAX_COLOR;
         } else if (i == 2) {
-            r = 255;
+            r = View::MAX_COLOR;
             g = 0;
             b = 0;
         }
@@ -72,8 +71,8 @@ void Controller::updateGenericScaling(const std::vector<Dynamics::Body>& bodies)
     max_dist = std::max(max_dist, std::abs(min_y));
     max_dist = std::max(max_dist, std::abs(max_y));
 
-    double scale_x = (windowWidth / 2.0 * 0.8) / (max_dist + 1e-5);
-    double scale_y = (windowHeight / 2.0 * 0.8) / (max_dist + 1e-5);
+    double scale_x = (windowWidth * WINDOW_SCALE_FACTOR) / (max_dist + DIV_0_EPSILON);
+    double scale_y = (windowHeight * WINDOW_SCALE_FACTOR) / (max_dist + DIV_0_EPSILON);
     double new_scale = std::min(scale_x, scale_y);
 
     scale = std::min(static_cast<double>(scale), new_scale);
@@ -103,7 +102,7 @@ void Controller::updateTrails(const std::vector<Dynamics::Body>& bodies) {
         for (size_t j = 0; j < trailWorldPositions[i].size(); j++) {
             float x = screenCenter.x() + static_cast<float>(trailWorldPositions[i][j].x() * scale);
             float y = screenCenter.y() - static_cast<float>(trailWorldPositions[i][j].y() * scale);
-            uint8_t alpha = static_cast<uint8_t>(255.0 * (static_cast<double>(j) / trailWorldPositions[i].size()));
+            uint8_t alpha = static_cast<uint8_t>(View::MAX_COLOR * (static_cast<double>(j) / trailWorldPositions[i].size()));
             
             trails[i].push_back({x, y, alpha});
         }

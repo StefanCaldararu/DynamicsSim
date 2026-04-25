@@ -6,13 +6,13 @@
 namespace Vis {
 
 View::View() : infoText(font) {
-    window = sf::RenderWindow(sf::VideoMode({800, 600}), "Simulation");
+    window = sf::RenderWindow(sf::VideoMode({WINDOW_X, WINDOW_Y}), "Simulation");
     
     const std::string fontPath = "../Assets/Fonts/Arial.ttf";
     if (font.openFromFile(fontPath)) {
-        infoText = sf::Text(font, "", 14);
+        infoText = sf::Text(font, "", FONT_SIZE);
         infoText.setFillColor(sf::Color::White);
-        infoText.setPosition(sf::Vector2f(12., window.getSize().y - 80.));
+        infoText.setPosition(sf::Vector2f(INFO_TEXT_X, INFO_TEXT_Y));
     }
 }
 
@@ -40,7 +40,7 @@ void View::renderTrails(const std::vector<std::vector<TrailPoint>>& trails) {
             
             for (size_t i = 0; i < trail.size(); i++) {
                 vertices[i].position = {trail[i].x, trail[i].y};
-                vertices[i].color = sf::Color(255, 255, 255, trail[i].alpha);
+                vertices[i].color = sf::Color(View::MAX_COLOR, View::MAX_COLOR, View::MAX_COLOR, trail[i].alpha);
             }
             
             window.draw(vertices.data(), vertices.size(), sf::PrimitiveType::LineStrip);
@@ -58,7 +58,7 @@ void View::renderInfoPanel(double simTime, size_t bodyCount) {
     oss << "Time: " << simTime << "\n";
     oss << "Bodies: " << bodyCount;
     infoText.setString(oss.str());
-    infoText.setPosition(sf::Vector2f(12., window.getSize().y - 80.));
+    infoText.setPosition(sf::Vector2f(INFO_TEXT_X, INFO_TEXT_Y));
     window.draw(infoText);
 }
 
