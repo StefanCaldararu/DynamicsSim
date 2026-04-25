@@ -34,10 +34,3 @@ TEST(SystemFacadeTest, ThreeBodyStableScenario) {
     ASSERT_EQ(system.getBodies().size(), 3);
     EXPECT_EQ(system.getBodies()[0].getMass(), 1.0);
 }
-
-TEST(SystemFacadeTest, CR3BPLEOScenario) {
-    auto system = Dynamics::SystemFacade::createScenario(Dynamics::Scenario::CR3BP_LEO);
-
-    ASSERT_EQ(system.getBodies().size(), 3);
-    EXPECT_NEAR(system.getBodies()[0].getPosition().y(), 0.0, 1e-4f);
-}

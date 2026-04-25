@@ -41,8 +41,6 @@ Dynamics SystemFacade::createScenario(Scenario scenario) {
             return createOneLargeOneSmall();
         case Scenario::ThreeBodyStable:
             return createThreeBodyStable();
-        case Scenario::CR3BP_LEO:
-            return createCR3BPLEO();
         default:
             return createEarthMoonCR3BP_L4();
     }
@@ -106,24 +104,6 @@ Dynamics SystemFacade::createThreeBodyStable() {
     Body body3 = Body({-0.8660254, 0.5, 0.0}, {-0.29, -0.5, 0.0}, 1.0, 1.0);
 
     builder.addBody(body1).addBody(body2).addBody(body3).withModel(std::make_unique<GravityModel>(1.0, builder.getBodies())).withIntegrator(std::make_unique<RK4>());
-
-    return builder.build();
-}
-
-Dynamics SystemFacade::createCR3BPLEO() {
-    const double mu = 0.01215;
-    DynamicsBuilder builder;
-
-    double r_leo = 0.0176;
-    double x = -mu + r_leo;
-    double y = 0.0;
-    double v_inertial = std::sqrt((1.0 - mu) / r_leo);
-    double vy = v_inertial - x;
-
-    Body spacecraft = Body({x, y, 0.0}, {0.0, vy, 0.0}, 0.0, 1.0);
-    Body earth =  Body({-mu, 0.0, 0.0}, {0,0,0}, 1.0, 10.0);
-    Body moon = Body({1.0 - mu, 0.0, 0.0}, {0,0,0}, mu, 5.0); 
-    builder.addBody(spacecraft).addBody(earth).addBody(moon).withModel(std::make_unique<CR3BPModel>(mu)).withIntegrator(std::make_unique<RK4>());
 
     return builder.build();
 }
