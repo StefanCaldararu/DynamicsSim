@@ -35,7 +35,7 @@ private:
 
     static constexpr double MIN_DRAW_RADIUS = 3.0;
     static constexpr double MAX_DRAW_RADIUS = 30.0;
-    static constexpr double DRAW_RADIUS_FACTOR = 0.02;
+    static constexpr double DRAW_RADIUS_FACTOR = 0.005;
     static constexpr double DIV_0_EPSILON = 1e-5;
     static constexpr double WINDOW_SCALE_FACTOR = 0.4;
     static constexpr size_t MAX_TRAIL_LENGTH = 8000;
