@@ -48,6 +48,9 @@ Dynamics SystemFacade::createScenario(Scenario scenario) {
     }
 }
 
+// All scenario "Magic Numbers" are from:
+// https://ssd.jpl.nasa.gov/tools/periodic_orbits.html
+
 Dynamics SystemFacade::createEarthMoonCR3BP_L4() {
     const double mu = 0.01215;
     DynamicsBuilder builder;
@@ -64,8 +67,6 @@ Dynamics SystemFacade::createEarthMoonCR3BP_L4() {
 Dynamics SystemFacade::createEarthMoonCR3BP_L4_Tadpole() {
     const double mu = 0.01215;
     DynamicsBuilder builder;
-    // Short period L4 orbit grabbed from ID 768
-    // https://ssd.jpl.nasa.gov/tools/periodic_orbits.html
     Body spacecraft = Body({4.8784941344943100e-1, 1.3592776304398071, 0.}, {7.3994557499431435e-1, -3.6396916907329402e-1, 0.}, 0., 1.0);
     Body earth = Body({-mu, 0.0, 0.0}, {0,0,0}, 1.0, 10.0);
     Body moon = Body({1.0 - mu, 0.0, 0.0}, {0,0,0}, mu, 5.0);
