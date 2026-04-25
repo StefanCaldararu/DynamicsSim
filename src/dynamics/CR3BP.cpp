@@ -1,6 +1,11 @@
 #include "dynamics/CR3BP.hpp"
 #include <cmath>
 
+// This class contains the ODE equations for the Circular Restricted 3 Body Problem. The dynamics for this can be found here:
+// https://www.researchgate.net/publication/36711030_Low-energy_ballistic_lunar_transfers
+// Usage of magic numbers is included in here, as we have a direct description of the algorithm provided above. It was deemed
+// that definition of these in the header file would cause more confusion than benefit.
+
 namespace Dynamics {
 
 CR3BPModel::CR3BPModel(double mu_)
@@ -43,19 +48,11 @@ void CR3BPModel::derivatives(
 
     dpos_dt[0] = v;
 
-    double ax =
-        2.0 * vy + x
-        - (1 - mu)*(x + mu)/std::pow(r1, 3)
-        - mu*(x - (1 - mu))/std::pow(r2, 3);
+    double ax = 2.0 * vy + x - (1 - mu)*(x + mu)/std::pow(r1, 3) - mu*(x - (1 - mu))/std::pow(r2, 3);
 
-    double ay =
-        -2.0 * vx + y
-        - (1 - mu)*y/std::pow(r1, 3)
-        - mu*y/std::pow(r2, 3);
+    double ay = -2.0 * vx + y - (1 - mu)*y/std::pow(r1, 3) - mu*y/std::pow(r2, 3);
 
-    double az =
-        - (1 - mu)*z/std::pow(r1, 3)
-        - mu*z/std::pow(r2, 3);
+    double az = - (1 - mu)*z/std::pow(r1, 3) - mu*z/std::pow(r2, 3);
 
     dvel_dt[0] = Eigen::Vector3d(ax, ay, az);
 

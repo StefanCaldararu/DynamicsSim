@@ -1,5 +1,10 @@
 #include "dynamics/RK4.hpp"
 
+// This class contains the Runge-Kutta order 4 integration equations. These are standardiezed equations, and so magic numbers
+// are used here as definition of them as variables in the header would only cause further confusion. To read more about this
+// method, see the following link:
+// https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods
+
 namespace Dynamics {
 
 void RK4::step(double t, std::vector<Body>& bodies, ODE& model, double dt) {
